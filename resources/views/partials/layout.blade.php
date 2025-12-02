@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en" data-theme="dracula">
 
 <head>
     <meta charset="UTF-8">
@@ -10,7 +10,8 @@
 </head>
 
 <body>
-    <div class="container mx-auto">
+    @include('partials.nav')
+    <div class="container mx-auto mt-2">
         @yield('content')
     </div>
 </body>
