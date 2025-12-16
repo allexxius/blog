@@ -8,4 +8,5 @@
                  @include('partials.post-card')
             @endforeach
         </div>
+
 @endsection
