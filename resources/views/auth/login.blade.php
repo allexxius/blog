@@ -1,47 +1,61 @@
-<x-guest-layout>
+@extends('partials.layout')
+@section('title', 'Login')
+@section('content')
     <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
-
-    <form method="POST" action="{{ route('login') }}">
-        @csrf
-
-        <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+    @if (session('status'))
+        <div role="alert" class="alert alert-success">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <span>{{ session('status') }}</span>
         </div>
+    @endif
+    <div class="card w-96 bg-base-100 shadow-xl mx-auto">
+        <div class="card-body">
+            <form method="POST" action="{{ route('login') }}">
+                @csrf
 
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
+                <!-- Email Address -->
+                <fieldset class="fieldset">
+                    <legend class="fieldset-legend">@lang('Email')</legend>
+                    <input type="email" name="email" class="input" value="{{ old('email') }}"
+                        placeholder="@lang('Email')" required autofocus autocomplete="username" />
+                    @error('email')
+                        <p class="label">{{ $message }}</p>
+                    @enderror
+                </fieldset>
+                <!-- Password -->
+                <fieldset class="fieldset">
+                    <legend class="fieldset-legend">@lang('Password')</legend>
+                    <input type="password" name="password" class="input" value="{{ old('password') }}"
+                        placeholder="@lang('Password')" required autocomplete="current-password" />
+                    @error('password')
+                        <p class="label">{{ $message }}</p>
+                    @enderror
+                </fieldset>
 
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="current-password" />
+                <!-- Remember Me -->
 
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+                <fieldset class="fieldset w-64 p-4">
+                    <label class="label">
+                        <input name="remember" type="checkbox" class="checkbox" />
+                        @lang('Remember me')
+                    </label>
+                </fieldset>
+
+                <div class="flex items-center justify-end mt-4">
+                    @if (Route::has('password.request'))
+                        <a class="link" href="{{ route('password.request') }}">
+                            {{ __('Forgot your password?') }}
+                        </a>
+                    @endif
+
+                    <button class="btn btn-primary ms-3">
+                        {{ __('Log in') }}
+                    </button>
+                </div>
+            </form>
         </div>
-
-        <!-- Remember Me -->
-        <div class="block mt-4">
-            <label for="remember_me" class="inline-flex items-center">
-                <input id="remember_me" type="checkbox" class="rounded dark:bg-gray-900 border-gray-300 dark:border-gray-700 text-indigo-600 shadow-sm focus:ring-indigo-500 dark:focus:ring-indigo-600 dark:focus:ring-offset-gray-800" name="remember">
-                <span class="ms-2 text-sm text-gray-600 dark:text-gray-400">{{ __('Remember me') }}</span>
-            </label>
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
-            @if (Route::has('password.request'))
-                <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('password.request') }}">
-                    {{ __('Forgot your password?') }}
-                </a>
-            @endif
-
-            <x-primary-button class="ms-3">
-                {{ __('Log in') }}
-            </x-primary-button>
-        </div>
-    </form>
-</x-guest-layout>
+    </div>
+@endsection
