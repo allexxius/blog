@@ -8,8 +8,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class PublicController extends Controller
 {
-    public function index(){
-
+    public function index() {
         $posts = Post::with('user')->withCount('comments')->latest()->simplePaginate(16);
         return view('welcome', compact('posts'));
     }
