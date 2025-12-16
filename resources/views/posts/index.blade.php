@@ -2,7 +2,12 @@
 @section('title', 'Posts')
 @section('content')
 <a href="{{ route('posts.create') }}" class="btn btn-primary">New Post</a>
-<a href="{{ route('posts.deleted') }}" class="btn btn-secondary">Deleted Posts</a>
+@if(Route::is('posts.deleted'))
+    <a href="{{ route('posts.index') }}" class="btn btn-secondary">All Posts</a>
+@else
+    <a href="{{ route('posts.deleted') }}" class="btn btn-secondary">Deleted Posts</a>
+@endif
+
 {{ $posts->links() }}
 <div class="bg-base-100 border border-base-content/5 rounded-box">
     <table class="table table-zebra">

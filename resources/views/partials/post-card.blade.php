@@ -10,6 +10,7 @@
         @else
             <p>{{ $post->snippet }}</p>
         @endisset
+        <p class="text-base-content/50">{{ $post->user->name }}</p>
         <div class="card-actions justify-end">
             @if(!isset($full))
                 <a href="/post/{{ $post->id }}" class="btn btn-primary">Read More</a>
