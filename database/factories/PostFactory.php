@@ -19,6 +19,8 @@ class PostFactory extends Factory
         return [
             'title' => fake()->sentence,
             'body' => fake()->paragraphs(12, true),
+            'created_at' => fake()->dateTimeThisDecade(),
+            'updated_at' => fake()->dateTimeThisDecade(),
         ];
     }
 }

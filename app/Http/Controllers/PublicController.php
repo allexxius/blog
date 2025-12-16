@@ -10,7 +10,7 @@ class PublicController extends Controller
 {
     public function index(){
 
-        $posts = Post::with('user')->withCount('comments')->simplePaginate(16);
+        $posts = Post::with('user')->withCount('comments')->latest()->simplePaginate(16);
         return view('welcome', compact('posts'));
     }
 
